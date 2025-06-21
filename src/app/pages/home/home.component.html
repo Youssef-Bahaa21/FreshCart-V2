@@ -1,0 +1,261 @@
+<!-- Hero Section -->
+<section class="container mx-auto px-4 py-6 md:py-8">
+  <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_30%] gap-4 md:gap-6">
+    <div class="relative rounded-2xl shadow-xl overflow-hidden">
+      <owl-carousel-o [options]="customMainSlider">
+        <ng-template carouselSlide>
+          <img
+            src="images/img1.avif"
+            alt="Summer Collection"
+            class="w-full h-[250px] sm:h-[300px] md:h-[350px] object-cover transition duration-700 hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4 sm:p-6">
+            <div class="text-white mb-2 sm:mb-4">
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2">Summer Collection</h3>
+              <p class="text-gray-200 mb-2 sm:mb-4 text-xs sm:text-sm md:text-base">Discover our latest products with amazing deals</p>
+              <a href="#products" class="inline-block px-4 py-2 sm:px-6 sm:py-3 rounded-lg metallic-button hover:shadow-lg transition duration-300 text-xs sm:text-sm">Shop Now</a>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <img
+            src="images/img2.avif"
+            alt="New Arrivals"
+            class="w-full h-[250px] sm:h-[300px] md:h-[350px] object-cover transition duration-700 hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[var(--primary-blue)]/70 to-transparent flex items-end p-4 sm:p-6">
+            <div class="text-white mb-2 sm:mb-4">
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2 text-white">New Arrivals</h3>
+              <p class="text-[var(--lavender)] mb-2 sm:mb-4 text-xs sm:text-sm md:text-base">Be the first to shop our newest items</p>
+              <a href="#products" class="inline-block px-4 py-2 sm:px-6 sm:py-3 rounded-lg bg-white text-[var(--primary-blue)] font-semibold transition hover:bg-[var(--lavender)] hover:shadow-lg text-xs sm:text-sm">Explore Now</a>
+            </div>
+          </div>
+        </ng-template>
+     
+        <ng-template carouselSlide>
+          <img
+            src="images/img4.avif"
+            alt="Premium Collection"
+            class="w-full h-[250px] sm:h-[300px] md:h-[350px] object-cover transition duration-700 hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-r from-[var(--primary-blue)]/80 to-transparent flex items-end p-4 sm:p-6">
+            <div class="text-white mb-2 sm:mb-4">
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2">Premium Collection</h3>
+              <p class="text-[var(--lavender)] mb-2 sm:mb-4 text-xs sm:text-sm md:text-base">Luxury items with exceptional quality</p>
+              <a href="#products" class="inline-block px-4 py-2 sm:px-6 sm:py-3 rounded-lg bg-white text-[var(--primary-blue)] font-semibold transition hover:bg-[var(--lavender)] hover:shadow-lg text-xs sm:text-sm">Shop Premium</a>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <img
+            src="images/img5.avif"
+            alt="Season Sale"
+            class="w-full h-[250px] sm:h-[300px] md:h-[350px] object-cover transition duration-700 hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[var(--secondary-blue)]/70 to-transparent flex items-end p-4 sm:p-6">
+            <div class="text-white mb-2 sm:mb-4">
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2">Season Sale</h3>
+              <p class="text-[var(--lavender)] mb-2 sm:mb-4 text-xs sm:text-sm md:text-base">Enjoy up to 50% off on selected items</p>
+              <a href="#products" class="inline-block px-4 py-2 sm:px-6 sm:py-3 rounded-lg bg-white text-[var(--secondary-blue)] font-semibold transition hover:bg-[var(--lavender)] hover:shadow-lg text-xs sm:text-sm">Shop Sale</a>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <img
+            src="images/img6.avif"
+            alt="Designer Collection"
+            class="w-full h-[250px] sm:h-[300px] md:h-[350px] object-cover transition duration-700 hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-b from-[var(--primary-blue)]/70 to-transparent flex items-end p-4 sm:p-6">
+            <div class="text-white mb-2 sm:mb-4">
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2">Designer Collection</h3>
+              <p class="text-[var(--lavender)] mb-2 sm:mb-4 text-xs sm:text-sm md:text-base">Exclusive designs from top brands</p>
+              <a href="#products" class="inline-block px-4 py-2 sm:px-6 sm:py-3 rounded-lg bg-white text-[var(--primary-blue)] font-semibold transition hover:bg-[var(--lavender)] hover:shadow-lg text-xs sm:text-sm">View Collection</a>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template carouselSlide>
+          <img
+            src="images/img7.avif"
+            alt="Limited Edition"
+            class="w-full h-[250px] sm:h-[300px] md:h-[350px] object-cover transition duration-700 hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex items-end p-4 sm:p-6">
+            <div class="text-white mb-2 sm:mb-4">
+              <h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2">Limited Edition</h3>
+              <p class="text-[var(--lavender)] mb-2 sm:mb-4 text-xs sm:text-sm md:text-base">Shop our exclusive limited edition items</p>
+              <a href="#products" class="inline-block px-4 py-2 sm:px-6 sm:py-3 rounded-lg bg-white text-[var(--secondary-blue)] font-semibold transition hover:bg-[var(--lavender)] hover:shadow-lg text-xs sm:text-sm">Explore Limited</a>
+            </div>
+          </div>
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+
+    <!-- Side Banners -->
+    <div class="flex flex-row md:flex-col gap-4 banner-section mt-4 md:mt-0">
+      <div class="relative rounded-xl overflow-hidden shadow-lg h-[130px] sm:h-[150px] md:h-[170px] flex-1 md:flex-auto">
+        <img
+          src="images/grocery-banner.png"
+          alt=""
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-[var(--primary-blue)]/60 to-transparent flex items-center p-3 sm:p-4 md:p-6">
+          <div class="text-white">
+            <h3 class="text-sm md:text-xl font-bold mb-0 md:mb-1">Fresh Groceries</h3>
+            <p class="text-[var(--lavender)] mb-1 md:mb-2 text-xs md:text-sm">Up to 25% off on first order</p>
+            <a routerLink="/products" class="text-xs font-semibold px-2 py-1 bg-white text-[var(--primary-blue)] rounded-full hover:bg-[var(--lavender)] transition-colors">Shop Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="relative rounded-xl overflow-hidden shadow-lg h-[130px] sm:h-[150px] md:h-[170px] flex-1 md:flex-auto">
+        <img
+          src="images/grocery-banner-2.jpeg"
+          alt=""
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-[var(--secondary-blue)]/70 to-transparent flex items-center p-3 sm:p-4 md:p-6">
+          <div class="text-white">
+            <h3 class="text-sm md:text-xl font-bold mb-0 md:mb-1">Organic Products</h3>
+            <p class="text-[var(--lavender)] mb-1 md:mb-2 text-xs md:text-sm">Healthy choices for your family</p>
+            <a routerLink="/products" class="text-xs font-semibold px-2 py-1 bg-white text-[var(--secondary-blue)] rounded-full hover:bg-[var(--lavender)] transition-colors">Discover More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="container mx-auto px-4 py-10 md:py-16">
+  <h2 class="section-title text-2xl md:text-3xl font-bold text-center mb-8 md:mb-10">
+    Popular Categories
+  </h2>
+  <owl-carousel-o [options]="customOptions">
+    @for (cat of categories; track cat._id) {
+    <ng-template carouselSlide>
+      <div class="category-item mx-2 p-3 md:p-5 text-center cursor-pointer transform transition-transform hover:scale-105" (click)="navigateToCategory(cat)">
+        <div class="relative mb-3 md:mb-4 mx-auto w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] md:w-[150px] md:h-[150px] rounded-full overflow-hidden bg-white p-2 shadow-md">
+          <img
+            [src]="cat.image"
+            class="w-full h-full object-contain rounded-full"
+            alt=""
+          />
+          <div class="absolute inset-0 rounded-full border-2 border-white/30 border-dashed"></div>
+        </div>
+        <h3 class="text-base md:text-xl font-semibold text-gray-800 truncate px-2">{{ cat.name }}</h3>
+      </div>
+    </ng-template>
+    }
+  </owl-carousel-o>
+</section>
+
+<!-- Products Section -->
+<section
+  id="products"
+  class="py-10 md:py-16 metallic-gradient"
+>
+  <div class="container mx-auto px-4">
+    <h2 class="text-2xl md:text-3xl font-bold text-white text-center mb-8 md:mb-10">
+      Featured Products
+    </h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+      @for (product of products.slice(0,12); track product.id) {
+      <div class="card relative bg-white rounded-xl overflow-hidden shadow-lg">
+        <!-- Use the new product badge class -->
+        <span class="product-badge">
+          <i class="fas fa-fire-alt mr-1"></i> Trending
+        </span>
+
+        <div [routerLink]="['/details', product.id]" class="cursor-pointer">
+          <div class="card-img overflow-hidden bg-gray-50 p-4 flex justify-center items-center h-[180px] md:h-[220px]">
+            <img
+              [src]="product.imageCover"
+              class="h-full object-contain transition-transform duration-500 hover:scale-110"
+              [alt]="product.title"
+            />
+          </div>
+          <div class="card-body px-4 py-3 md:px-5 md:py-4">
+            <div class="flex items-center mb-2">
+              <span class="text-xs px-2 py-1 rounded-full bg-[var(--lavender)] text-[var(--primary-blue)] font-semibold">
+                {{ product.category.name | uppercase }}
+              </span>
+              <div class="ml-auto flex items-center text-yellow-500">
+                <i class="fas fa-star text-sm"></i>
+                <span class="text-xs ml-1 font-medium text-gray-600">{{
+                  product.ratingsAverage
+                }}</span>
+              </div>
+            </div>
+            
+            <h3 class="font-bold text-base md:text-lg text-gray-800 mb-1 md:mb-2 line-clamp-1">
+              {{ product.title.split(" ", 2).join(" ") }}
+            </h3>
+            
+            <p class="text-gray-600 text-xs md:text-sm mb-2 md:mb-3 line-clamp-2">
+              {{ product.description ? product.description.substring(0, 60) + '...' : 'No description available' }}
+            </p>
+            
+            <div class="flex items-center justify-between">
+              <span class="text-[var(--primary-blue)] font-bold text-lg md:text-xl"
+                >{{ product.price | currency : "GBP" }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <button
+          (click)="addToCart(product.id)"
+          class="bg-[var(--primary-blue)] hover:bg-[var(--secondary-blue)] transition-colors duration-300 px-3 py-2 md:px-4 md:py-3 text-white w-full font-medium flex items-center justify-center gap-2 text-sm md:text-base"
+        >
+          <i class="fas fa-shopping-cart"></i>
+          Add to Cart
+        </button>
+      </div>
+      }
+    </div>
+    
+    <div class="mt-8 md:mt-12 text-center">
+      <a routerLink="/products" class="inline-block px-6 py-2 md:px-8 md:py-3 bg-white text-[var(--primary-blue)] font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 text-sm md:text-base">
+        View All Products <i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="container mx-auto px-4 py-10 md:py-16">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+    <div class="text-center p-4 md:p-6 rounded-xl bg-gray-50 shadow-md hover:shadow-lg transition-shadow duration-300">
+      <div class="w-10 h-10 md:w-14 md:h-14 bg-[var(--pale-blue)] rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+        <i class="fas fa-truck text-lg md:text-xl text-[var(--primary-blue)]"></i>
+      </div>
+      <h3 class="text-base md:text-lg font-bold text-gray-800 mb-1 md:mb-2">Free Shipping</h3>
+      <p class="text-xs md:text-sm text-gray-600">On all orders over $50</p>
+    </div>
+
+    <div class="text-center p-4 md:p-6 rounded-xl bg-gray-50 shadow-md hover:shadow-lg transition-shadow duration-300">
+      <div class="w-10 h-10 md:w-14 md:h-14 bg-[var(--pale-blue)] rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+        <i class="fas fa-undo text-lg md:text-xl text-[var(--primary-blue)]"></i>
+      </div>
+      <h3 class="text-base md:text-lg font-bold text-gray-800 mb-1 md:mb-2">Easy Returns</h3>
+      <p class="text-xs md:text-sm text-gray-600">30 days return policy</p>
+    </div>
+
+    <div class="text-center p-4 md:p-6 rounded-xl bg-gray-50 shadow-md hover:shadow-lg transition-shadow duration-300">
+      <div class="w-10 h-10 md:w-14 md:h-14 bg-[var(--pale-blue)] rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+        <i class="fas fa-shield-alt text-lg md:text-xl text-[var(--primary-blue)]"></i>
+      </div>
+      <h3 class="text-base md:text-lg font-bold text-gray-800 mb-1 md:mb-2">Secure Payments</h3>
+      <p class="text-xs md:text-sm text-gray-600">100% secure checkout</p>
+    </div>
+
+    <div class="text-center p-4 md:p-6 rounded-xl bg-gray-50 shadow-md hover:shadow-lg transition-shadow duration-300">
+      <div class="w-10 h-10 md:w-14 md:h-14 bg-[var(--pale-blue)] rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+        <i class="fas fa-headset text-lg md:text-xl text-[var(--primary-blue)]"></i>
+      </div>
+      <h3 class="text-base md:text-lg font-bold text-gray-800 mb-1 md:mb-2">24/7 Support</h3>
+      <p class="text-xs md:text-sm text-gray-600">Dedicated customer care</p>
+    </div>
+  </div>
+</section>

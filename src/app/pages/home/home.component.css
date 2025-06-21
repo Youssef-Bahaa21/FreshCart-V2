@@ -1,0 +1,175 @@
+.card {
+  overflow: hidden;
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.card button {
+  transform: translateY(100%);
+  transition: all 0.5s;
+  opacity: 0;
+}
+
+/* Show add to cart button immediately on mobile - they won't hover */
+@media (max-width: 640px) {
+  .card button {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Desktop hover effects */
+@media (min-width: 641px) {
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(61, 82, 160, 0.2);
+    
+    button {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+.category-item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.category-item:hover img {
+  transform: scale(1.05);
+}
+
+.category-item img {
+  transition: transform 0.5s ease;
+}
+
+.category-item h3 {
+  transition: color 0.3s ease;
+}
+
+.category-item:hover h3 {
+  color: var(--primary-blue);
+}
+
+/* Hide "View Products" label on mobile */
+.category-item::after {
+  content: "View Products";
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  right: 0;
+  background-color: var(--primary-blue);
+  color: white;
+  font-size: 12px;
+  padding: 4px 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .category-item:hover::after {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+/* On mobile devices, add a touch effect instead of hover */
+@media (max-width: 767px) {
+  .category-item:active {
+    transform: scale(0.95);
+    background-color: rgba(var(--pale-blue-rgb), 0.1);
+  }
+}
+
+.product-badge {
+  background-color: var(--primary-blue);
+  color: white;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 12px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+.banner-section img {
+  filter: brightness(1.05);
+  transition: all 0.4s ease;
+}
+
+.banner-section img:hover {
+  filter: brightness(1.1) contrast(1.05);
+  transform: scale(1.03);
+}
+
+/* Make side banners stack horizontally on mobile */
+@media (max-width: 767px) {
+  .banner-section {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  .banner-section > div {
+    flex: 1;
+  }
+}
+
+.section-title {
+  position: relative;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+  border-radius: 2px;
+}
+
+/* Responsive font sizes */
+@media (max-width: 767px) {
+  .section-title {
+    font-size: 1.5rem;
+  }
+  
+  .section-title::after {
+    width: 60px;
+    height: 3px;
+  }
+}
+
+/* Make carousels responsive */
+::ng-deep .owl-carousel {
+  touch-action: manipulation;
+}
+
+/* Custom dots position for mobile */
+@media (max-width: 767px) {
+  ::ng-deep .owl-dots {
+    margin-top: 15px !important;
+  }
+  
+  ::ng-deep .owl-dot span {
+    width: 8px !important;
+    height: 8px !important;
+  }
+}

@@ -1,0 +1,249 @@
+.card {
+  button {
+    transform: translateY(100%);
+    transition: all 0.5s;
+    opacity: 0;
+  }
+
+  &:hover {
+    button {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}
+
+.product-card {
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+/* Apply hover effects only on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .product-card:hover .product-image-container img {
+    transform: scale(1.05);
+  }
+  
+  .add-to-cart-btn:hover .cart-btn-text {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  
+  .product-card:hover .absolute.top-2.right-2,
+  .product-card:hover .absolute.top-3.right-3 {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) or (pointer: coarse) {
+  .add-to-cart-btn {
+    width: auto !important;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+  }
+  
+  .cart-btn-text {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+  }
+  
+  .absolute.top-2.right-2,
+  .absolute.top-3.right-3 {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Product image container and hover effect */
+.product-image-container {
+  background: linear-gradient(to bottom, rgba(237, 232, 245, 0.3), rgba(255, 255, 255, 1));
+}
+
+.product-image-container img {
+  mix-blend-mode: multiply;
+  transition: transform 0.5s ease;
+}
+
+/* Add to cart button animation */
+.add-to-cart-btn {
+  position: relative;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(112, 145, 230, 0.25);
+}
+
+.add-to-cart-btn:hover {
+  box-shadow: 0 4px 12px rgba(61, 82, 160, 0.3);
+}
+
+.cart-btn-text {
+  transform: translateX(30px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+/* Rating stars animation - only on desktop */
+.fas.fa-star {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover .fas.fa-star {
+    animation: pulse 1s ease-in-out;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Quick action buttons */
+.product-card .absolute.top-2.right-2,
+.product-card .absolute.top-3.right-3 {
+  transform: translateX(50px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+/* Pagination hover effects */
+.pagination button {
+  transition: all 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pagination button:not([disabled]):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(61, 82, 160, 0.2);
+  }
+}
+
+/* Badge shine animation - reduce on mobile for better performance */
+@keyframes shine {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.bg-\[var\(--primary-blue\)\].text-white.text-xs.font-bold::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+}
+
+@media (min-width: 768px) {
+  .bg-\[var\(--primary-blue\)\].text-white.text-xs.font-bold::after {
+    animation: shine 3s infinite linear;
+  }
+}
+
+/* Enhanced search bar styles */
+input[type="text"] {
+  transition: all 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  input[type="text"]:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(61, 82, 160, 0.15);
+  }
+}
+
+/* Search icon pulse animation - disable on mobile for better performance */
+@keyframes gentle-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (min-width: 768px) {
+  .fa-search {
+    animation: gentle-pulse 2s infinite ease-in-out;
+  }
+}
+
+/* Clear search button animation */
+.fa-times-circle {
+  transition: all 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fa-times-circle:hover {
+    transform: rotate(90deg);
+  }
+}
+
+/* Pagination styles */
+.pagination button {
+  transition: all 0.3s ease;
+}
+
+.pagination button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Make pagination responsive */
+@media (max-width: 640px) {
+  .pagination button {
+    font-size: 12px;
+  }
+}
+
+/* Loader animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Extra small devices support */
+@media (max-width: 475px) {
+  :host ::ng-deep .xs\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Improve responsiveness on very small screens */
+@media (max-width: 360px) {
+  .product-card {
+    margin-left: -5px;
+    margin-right: -5px;
+    width: calc(100% + 10px);
+  }
+}

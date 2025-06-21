@@ -1,0 +1,153 @@
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Component styling */
+:host {
+  display: block;
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Loading Spinner */
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: -0.125em;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.2em;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Hide spinner text */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Cart item styling */
+.product-image-container {
+  overflow: hidden;
+}
+
+.product-image-container img {
+  transition: transform 0.3s ease;
+}
+
+/* Only apply hover effects on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  .product-image-container:hover img {
+    transform: scale(1.1);
+  }
+}
+
+/* Line clamp for product titles */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Empty cart styling */
+.fa-shopping-cart {
+  opacity: 0.8;
+}
+
+/* SweetAlert custom styling */
+:root {
+  --swal-border-radius: 0.5rem;
+}
+
+.swal2-popup {
+  border-radius: var(--swal-border-radius);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.swal-confirm-button {
+  border-radius: 0.375rem !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+}
+
+.swal-cancel-button {
+  border-radius: 0.375rem !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .product-count {
+    margin-top: 0.75rem;
+  }
+  
+  /* Optimize touch targets for mobile */
+  button {
+    min-height: 36px;
+    min-width: 36px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 475px) {
+  :host ::ng-deep .xs\:flex-row {
+    flex-direction: row;
+  }
+  
+  :host ::ng-deep .xs\:flex-col {
+    flex-direction: column;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) or (pointer: coarse) {
+  /* Increase touch target sizes */
+  button {
+    min-height: 44px;
+  }
+  
+  /* Add active state for touch devices */
+  button:active {
+    transform: scale(0.97);
+  }
+}
+
+/* Reduce animation on devices that prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    animation: none;
+  }
+  
+  .spinner-border {
+    animation-duration: 1.5s;
+  }
+  
+  .product-image-container img {
+    transition: none;
+  }
+}

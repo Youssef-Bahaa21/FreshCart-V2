@@ -1,0 +1,157 @@
+/* Animation for loading spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Product card styling */
+.product-card {
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Only apply hover effects on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .product-card:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Wishlist badge animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.wishlist-badge, .cart-badge {
+  animation: pulse 1.5s infinite;
+}
+
+/* Empty wishlist styling */
+.fa-heart-broken {
+  color: var(--accent-pink);
+  opacity: 0.7;
+}
+
+/* Custom hover effect for wishlist items */
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 80%, rgba(var(--primary-blue-rgb), 0.05));
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* Loading animation */
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: -0.125em;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+}
+
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.2em;
+}
+
+/* Hide spinner text */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Fade transition for items */
+.product-card {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Touch device optimizations */
+@media (hover: none) or (pointer: coarse) {
+  /* Increase touch target sizes */
+  button {
+    min-height: 44px;
+  }
+  
+  /* Add active state for touch devices */
+  button:active {
+    transform: scale(0.97);
+  }
+  
+  .product-card:active {
+    background-color: rgba(var(--pale-blue-rgb), 0.05);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  /* Optimize touch targets for mobile */
+  button {
+    min-height: 36px;
+    min-width: 36px;
+  }
+  
+  /* Adjust animation timing for better performance on mobile */
+  .product-card {
+    animation-duration: 0.3s;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 475px) {
+  :host ::ng-deep .xs\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  /* Smaller padding for extra small devices */
+  .product-card > div {
+    padding: 0.5rem;
+  }
+}
+
+/* Reduce animation on devices that prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .product-card {
+    animation: none;
+    transition: none;
+  }
+  
+  .spinner-border {
+    animation-duration: 1.5s;
+  }
+  
+  .wishlist-badge, .cart-badge {
+    animation: none;
+  }
+}

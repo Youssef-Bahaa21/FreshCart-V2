@@ -1,0 +1,178 @@
+<div class="container mx-auto px-3 sm:px-4 py-4 sm:py-6 md:py-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3 sm:gap-0">
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--primary-blue)]">My Addresses</h1>
+      @if (!showForm()) {
+        <button 
+          (click)="addAddress()"
+          class="bg-[var(--primary-blue)] hover:bg-[var(--secondary-blue)] text-white text-sm sm:text-base px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition-colors duration-300 flex items-center gap-2"
+        >
+          <i class="fas fa-plus"></i> Add New Address
+        </button>
+      }
+    </div>
+
+    <!-- Loading State -->
+    @if (isLoading()) {
+      <div class="flex justify-center items-center h-40 sm:h-60">
+        <div class="spinner-border animate-spin inline-block w-8 h-8 sm:w-12 sm:h-12 border-3 sm:border-4 rounded-full text-[var(--primary-blue)]" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    } @else {
+      <!-- Address Form -->
+      @if (showForm()) {
+        <div class="bg-white p-4 sm:p-6 rounded-lg shadow-md mb-4 sm:mb-6">
+          <h2 class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-[var(--primary-blue)]">
+            {{ editingAddressId() ? 'Edit Address' : 'Add New Address' }}
+          </h2>
+          
+          <form [formGroup]="addressForm" (ngSubmit)="submitForm()" class="space-y-3 sm:space-y-4">
+            <!-- Details Field -->
+            <div class="form-group">
+              <label for="details" class="form-label">Address Details</label>
+              <textarea
+                formControlName="details"
+                id="details"
+                rows="3"
+                placeholder="Enter your complete address details"
+                class="form-control"
+                [class.is-invalid]="addressForm.get('details')?.invalid && addressForm.get('details')?.touched"
+              ></textarea>
+              @if (addressForm.get('details')?.invalid && addressForm.get('details')?.touched) {
+                <div class="text-red-500 text-xs sm:text-sm mt-1">Address details are required</div>
+              }
+            </div>
+
+            <!-- Phone Field -->
+            <div class="form-group">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input
+                type="tel"
+                formControlName="phone"
+                id="phone"
+                placeholder="Enter your phone number"
+                class="form-control"
+                [class.is-invalid]="addressForm.get('phone')?.invalid && addressForm.get('phone')?.touched"
+              />
+              @if (addressForm.get('phone')?.invalid && addressForm.get('phone')?.touched) {
+                <div class="text-red-500 text-xs sm:text-sm mt-1">
+                  @if (addressForm.get('phone')?.errors?.['required']) {
+                    Phone number is required
+                  } @else if (addressForm.get('phone')?.errors?.['pattern']) {
+                    Please enter a valid Egyptian phone number
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- City Field -->
+            <div class="form-group">
+              <label for="city" class="form-label">City</label>
+              <input
+                type="text"
+                formControlName="city"
+                id="city"
+                placeholder="Enter your city"
+                class="form-control"
+                [class.is-invalid]="addressForm.get('city')?.invalid && addressForm.get('city')?.touched"
+              />
+              @if (addressForm.get('city')?.invalid && addressForm.get('city')?.touched) {
+                <div class="text-red-500 text-xs sm:text-sm mt-1">City is required</div>
+              }
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex flex-col xs:flex-row gap-2 sm:gap-3 mt-4 sm:mt-6">
+              <button
+                type="submit"
+                [disabled]="addressForm.invalid || isSubmitting()"
+                class="bg-[var(--primary-blue)] hover:bg-[var(--secondary-blue)] text-white text-sm sm:text-base px-4 sm:px-5 py-1.5 sm:py-2 rounded-md transition-colors duration-300 flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                @if (isSubmitting()) {
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Saving...
+                } @else {
+                  <i class="fas fa-save"></i>
+                  {{ editingAddressId() ? 'Update Address' : 'Save Address' }}
+                }
+              </button>
+              
+              <button
+                type="button"
+                (click)="cancelEdit()"
+                class="border border-gray-300 hover:bg-gray-100 text-gray-700 text-sm sm:text-base px-4 sm:px-5 py-1.5 sm:py-2 rounded-md transition-colors duration-300 flex items-center justify-center gap-2"
+              >
+                <i class="fas fa-times"></i> Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      }
+
+      <!-- Address List -->
+      @if (addresses().length === 0 && !isLoading()) {
+        <div class="bg-gray-50 p-4 sm:p-8 text-center rounded-lg border border-gray-200">
+          <div class="text-4xl sm:text-5xl text-gray-300 mb-3 sm:mb-4">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <h3 class="text-lg sm:text-xl font-medium text-gray-600 mb-2">No Addresses Found</h3>
+          <p class="text-sm sm:text-base text-gray-500 mb-3 sm:mb-4">You haven't added any addresses yet.</p>
+          @if (!showForm()) {
+            <button 
+              (click)="addAddress()"
+              class="inline-flex items-center bg-[var(--primary-blue)] hover:bg-[var(--secondary-blue)] text-white text-sm sm:text-base px-3 sm:px-4 py-1.5 sm:py-2 rounded-md transition-colors duration-300"
+            >
+              <i class="fas fa-plus mr-2"></i> Add Your First Address
+            </button>
+          }
+        </div>
+      } @else {
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
+          @for (address of addresses(); track address._id) {
+            <div class="bg-white p-3 sm:p-5 rounded-lg shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+              <div class="flex justify-between items-start mb-2 sm:mb-3">
+                <div class="flex items-center">
+                  <i class="fas fa-map-marker-alt text-[var(--primary-blue)] mr-2 text-sm sm:text-base"></i>
+                  <h3 class="text-base sm:text-lg font-semibold text-gray-800 truncate max-w-[150px] sm:max-w-[200px]">{{ address.name || 'Address' }}</h3>
+                </div>
+                <div class="flex gap-1 sm:gap-2">
+                  <button 
+                    (click)="editAddress(address)"
+                    class="text-blue-500 hover:bg-blue-50 p-1 sm:p-1.5 rounded-full"
+                    title="Edit"
+                  >
+                    <i class="fas fa-edit text-sm sm:text-base"></i>
+                  </button>
+                  <button 
+                    (click)="deleteAddress(address._id || '')"
+                    class="text-red-500 hover:bg-red-50 p-1 sm:p-1.5 rounded-full"
+                    title="Delete"
+                  >
+                    <i class="fas fa-trash-alt text-sm sm:text-base"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="text-xs sm:text-sm text-gray-600 mb-1.5 sm:mb-2 flex items-start">
+                <i class="fas fa-home text-gray-400 mr-2 mt-0.5"></i>
+                <span class="line-clamp-2">{{ address.details }}</span>
+              </div>
+              
+              <div class="text-xs sm:text-sm text-gray-600 mb-1.5 sm:mb-2">
+                <i class="fas fa-city text-gray-400 mr-2"></i>
+                {{ address.city }}
+              </div>
+              
+              <div class="text-xs sm:text-sm text-gray-600">
+                <i class="fas fa-phone text-gray-400 mr-2"></i>
+                {{ address.phone }}
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+</div> 

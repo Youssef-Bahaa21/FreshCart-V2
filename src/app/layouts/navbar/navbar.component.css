@@ -1,0 +1,274 @@
+/* Base navbar styling */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+nav.scrolled {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Link styling */
+a {
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+}
+
+/* For active links with blue background */
+a.active-link {
+  background-color: var(--primary-blue);
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(61, 82, 160, 0.2);
+  font-weight: 500;
+}
+
+/* For active icons on mobile */
+a.active-icon {
+  background-color: var(--lavender);
+  color: var(--primary-blue) !important;
+  box-shadow: 0 2px 8px rgba(61, 82, 160, 0.1);
+}
+
+/* Badge styling */
+.badge-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+  background-color: var(--secondary-blue);
+  border-radius: 9999px;
+  padding: 0 0.375rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.2s ease;
+}
+
+/* Mobile specific badge styling */
+@media (max-width: 767px) {
+  .count-badge {
+    min-width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+    padding: 0 0.375rem;
+  }
+}
+
+/* Only apply hover effects on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  a:hover .count-badge {
+    transform: scale(1.1);
+  }
+}
+
+/* Logo animation */
+.logo-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: all 0.8s ease;
+}
+
+/* Only apply hover effects on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  .logo-container:hover::after {
+    left: 100%;
+  }
+  
+  .logo-container:hover img {
+    transform: scale(1.05);
+  }
+}
+
+img{
+  height: 80px;
+}
+
+/* Mobile menu styling */
+.mobile-menu {
+  overflow: hidden; /* Prevent scrolling of the entire menu */
+  -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+  z-index: 1002 !important;
+  height: 100vh !important;
+  top: 0 !important;
+  left: 0 !important;
+  position: fixed !important;
+  width: 75% !important;
+  max-width: 300px !important;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 0 10px 10px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile menu content styling */
+.mobile-menu-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  height: calc(100% - 60px); /* Adjust based on header height */
+}
+
+/* Enhanced Mobile menu overlay with stronger blur */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.backdrop-blur-overlay {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Mobile menu animation */
+@media (max-width: 767px) {
+  #navbar-default {
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    overflow: hidden;
+  }
+
+  #navbar-default.hidden {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  #navbar-default:not(.hidden) {
+    max-height: 1000px;
+    opacity: 1;
+  }
+  
+  /* Make links more tappable on mobile */
+  nav a {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    margin-bottom: 0.25rem;
+  }
+
+  /* Additional overlay styles for better mobile compatibility */
+  .backdrop-blur-overlay {
+    /* Fallbacks for browsers that don't support backdrop-filter */
+    background-color: rgba(0, 0, 0, 0.6);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.65));
+  }
+}
+
+/* Fixed backdrop - improved overlay */
+.fixed.inset-0 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1001;
+  pointer-events: auto;
+}
+
+/* Improved mobile menu transitions */
+.mobile-menu {
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-menu.translate-x-0 {
+  transform: translateX(0);
+}
+
+/* Metallic button styling */
+.metallic-button {
+  background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(61, 82, 160, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Only apply hover effects on devices that support hover */
+@media (hover: hover) and (pointer: fine) {
+  .metallic-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(61, 82, 160, 0.4);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) or (pointer: coarse) {
+  a:active, button:active {
+    transform: scale(0.98);
+  }
+  
+  .metallic-button:active {
+    transform: scale(0.98);
+    background: var(--secondary-blue);
+  }
+  
+  /* Ensure touch targets are large enough */
+  nav a, nav button {
+    min-height: 44px;
+  }
+}
+
+/* Reduce animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .logo-container::after {
+    display: none;
+  }
+  
+  nav, #navbar-default, .count-badge, .mobile-menu {
+    transition-duration: 0.1s;
+  }
+  
+  .mobile-menu {
+    transition-property: none;
+  }
+}
+
+/* Mobile menu section headers */
+.mobile-menu .section-header {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--primary-blue);
+  padding: 0.5rem 1rem;
+  background-color: var(--pale-blue);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Smooth transitions for all interactive elements */
+button, a {
+  transition: all 0.2s ease-in-out;
+}

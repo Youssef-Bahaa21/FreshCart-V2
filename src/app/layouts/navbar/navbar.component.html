@@ -1,0 +1,400 @@
+<!-- Main Navigation -->
+<nav class="bg-white shadow-md border-b border-[var(--pale-blue)] transition-all duration-300 fixed top-0 left-0 right-0 z-50" [ngClass]="{'scrolled': isScrolled}">
+  <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto px-3 sm:px-6 py-2 sm:py-3">
+    <!-- Mobile Menu Button -->
+    <div class="flex md:hidden order-1 z-[1002]">
+      <button
+        (click)="toggleMenu()"
+        type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-[var(--primary-blue)] rounded-lg hover:bg-[var(--lavender)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-blue)]"
+        aria-controls="navbar-default"
+        [attr.aria-expanded]="menuOpen"
+      >
+        <span class="sr-only">{{ menuOpen ? 'Close main menu' : 'Open main menu' }}</span>
+        <svg
+          *ngIf="!menuOpen"
+          class="w-5 h-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 17 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15"
+          />
+        </svg>
+        <svg 
+          *ngIf="menuOpen" 
+          class="w-5 h-5" 
+          aria-hidden="true" 
+          xmlns="http://www.w3.org/2000/svg" 
+          fill="none" 
+          viewBox="0 0 24 24"
+        >
+          <path 
+            stroke="currentColor" 
+            stroke-linecap="round" 
+            stroke-linejoin="round" 
+            stroke-width="2" 
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Logo (Centered on Mobile, Left on Desktop) -->
+    <a
+      routerLink="/home"
+      class="flex items-center justify-center space-x-3 rtl:space-x-reverse logo-container relative order-2 md:order-1 mx-auto md:mx-0"
+    >
+      <img src="images/freshcart-logo.svg" class="h-18 sm:h-20 md:h-20 hover:scale-105 transition-transform duration-300" alt="FreshCart Logo" loading="lazy" />
+    </a>
+
+    <!-- Mobile Action Icons -->
+    <div class="flex items-center gap-3 md:hidden order-3">
+      @if (isLogin) {
+        <a
+          routerLink="/wishlist"
+          routerLinkActive="active-icon"
+          class="flex items-center p-2 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-lg transition-colors duration-300"
+          (click)="closeMenuAndScrollTop()"
+          aria-label="Wishlist"
+        >
+          @if(wishlistCount > 0) {
+            <span class="count-badge mr-1">{{ wishlistCount < 10 ? wishlistCount : '9+' }}</span>
+          }
+          <i class="fas fa-heart text-lg"></i>
+        </a>
+        <a
+          routerLink="/cart"
+          routerLinkActive="active-icon"
+          class="flex items-center p-2 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-lg transition-colors duration-300"
+          (click)="closeMenuAndScrollTop()"
+          aria-label="Cart"
+        >
+          @if(cartCount > 0) {
+            <span class="count-badge mr-1">{{ cartCount < 10 ? cartCount : '9+' }}</span>
+          }
+          <i class="fas fa-shopping-cart text-lg"></i>
+        </a>
+      }
+    </div>
+
+    <!-- Enhanced Mobile Sidebar Menu -->
+    <div 
+      class="mobile-menu fixed top-0 left-0 h-full w-3/4 max-w-xs bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-[1002]" 
+      [ngClass]="{'translate-x-0': menuOpen, '-translate-x-full': !menuOpen}"
+    >
+      <!-- Mobile Menu Header -->
+      <div class="bg-[var(--lavender)] p-4 border-b border-[var(--pale-blue)] flex items-center justify-between">
+        <img src="images/freshcart-logo.svg" class="h-12" alt="FreshCart Logo">
+        <button 
+          (click)="closeMenu()" 
+          class="text-[var(--primary-blue)] hover:text-[var(--secondary-blue)] transition-colors p-1 rounded-full hover:bg-white/50"
+          aria-label="Close menu"
+        >
+          <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Mobile Menu Content -->
+      <div class="mobile-menu-content">
+        @if (isLogin) {
+          <div class="p-4 bg-white">
+            <ul class="space-y-1">
+              <li>
+                <a
+                  routerLink="/home"
+                  routerLinkActive="active-link"
+                  [routerLinkActiveOptions]="{exact: true}"
+                  class="flex items-center py-2.5 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+                  (click)="closeMenuAndScrollTop()"
+                >
+                  <i class="fas fa-home mr-3 w-5 text-center"></i>
+                  <span>Home</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  routerLink="/products"
+                  routerLinkActive="active-link"
+                  class="flex items-center py-2.5 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+                  (click)="closeMenuAndScrollTop()"
+                >
+                  <i class="fas fa-box mr-3 w-5 text-center"></i>
+                  <span>Products</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  routerLink="/categories"
+                  routerLinkActive="active-link"
+                  class="flex items-center py-2.5 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+                  (click)="closeMenuAndScrollTop()"
+                >
+                  <i class="fas fa-th-large mr-3 w-5 text-center"></i>
+                  <span>Categories</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  routerLink="/brands"
+                  routerLinkActive="active-link"
+                  class="flex items-center py-2.5 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+                  (click)="closeMenuAndScrollTop()"
+                >
+                  <i class="fas fa-tag mr-3 w-5 text-center"></i>
+                  <span>Brands</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="px-3 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider bg-gray-50">
+            My Account
+          </div>
+          
+          <div class="p-4 bg-white">
+            <ul class="space-y-1">
+              <li>
+                <a
+                  routerLink="/wishlist"
+                  routerLinkActive="active-link"
+                  class="flex items-center justify-between py-2.5 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+                  (click)="closeMenuAndScrollTop()"
+                >
+                  <div class="flex items-center">
+                    <i class="fas fa-heart mr-3 w-5 text-center"></i>
+                    <span>Wishlist</span>
+                  </div>
+                  @if(wishlistCount > 0) {
+                    <span class="count-badge">{{ wishlistCount < 10 ? wishlistCount : '9+' }}</span>
+                  }
+                </a>
+              </li>
+              <li>
+                <a
+                  routerLink="/cart"
+                  routerLinkActive="active-link"
+                  class="flex items-center justify-between py-2.5 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+                  (click)="closeMenuAndScrollTop()"
+                >
+                  <div class="flex items-center">
+                    <i class="fas fa-shopping-cart mr-3 w-5 text-center"></i>
+                    <span>Cart</span>
+                  </div>
+                  @if(cartCount > 0) {
+                    <span class="count-badge">{{ cartCount < 10 ? cartCount : '9+' }}</span>
+                  }
+                </a>
+              </li>
+              <li>
+                <a
+                  routerLink="/addresses"
+                  routerLinkActive="active-link"
+                  class="flex items-center py-2.5 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+                  (click)="closeMenuAndScrollTop()"
+                >
+                  <i class="fas fa-map-marker-alt mr-3 w-5 text-center"></i>
+                  <span>Addresses</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  routerLink="/allorders"
+                  routerLinkActive="active-link"
+                  class="flex items-center py-2.5 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+                  (click)="closeMenuAndScrollTop()"
+                >
+                  <i class="fas fa-box-open mr-3 w-5 text-center"></i>
+                  <span>My Orders</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="p-4 bg-white border-t border-[var(--pale-blue)]">
+            <a
+              role="button"
+              class="flex items-center justify-center w-full py-2.5 px-4 text-white bg-[var(--primary-blue)] hover:bg-[var(--secondary-blue)] rounded-md transition-all duration-300 shadow-md"
+              (click)="authServiceForTemplate.logoutUser()"
+            >
+              <i class="fas fa-sign-out-alt mr-2"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        } @else {
+          <div class="p-4 space-y-3">
+            <a
+              routerLink="/register"
+              routerLinkActive="active-link"
+              class="flex items-center py-2.5 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300 w-full"
+              (click)="closeMenuAndScrollTop()"
+            >
+              <i class="fas fa-user-plus mr-3 w-5 text-center"></i>
+              <span>Register</span>
+            </a>
+            <a
+              routerLink="/login"
+              routerLinkActive="active-link"
+              class="flex items-center justify-center py-2.5 px-4 text-white bg-[var(--primary-blue)] hover:bg-[var(--secondary-blue)] rounded-md transition-colors duration-300 w-full shadow-md"
+              (click)="closeMenuAndScrollTop()"
+            >
+              <i class="fas fa-sign-in-alt mr-2"></i>
+              <span>Login</span>
+            </a>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Improved backdrop overlay for mobile menu -->
+    <!-- We use two layers for better visual effect and compatibility -->
+    <div *ngIf="menuOpen" class="overlay-backdrop">
+      <!-- First layer: solid background for fallback -->
+      <div class="overlay-bg"></div>
+      <!-- Second layer: blur effect where supported -->
+      <div class="overlay-blur" (click)="closeMenu()"></div>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <div class="hidden md:flex md:flex-grow items-center justify-between order-2">
+      <!-- Main Navigation Links -->
+      <ul class="capitalize font-medium flex items-center space-x-2">
+        @if (isLogin) {
+          <li>
+            <a
+              routerLink="/home"
+              routerLinkActive="active-link"
+              [routerLinkActiveOptions]="{exact: true}"
+              class="block py-2 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+              aria-current="page"
+              (click)="closeMenuAndScrollTop()"
+            >Home</a>
+          </li>
+          <li>
+            <a
+              routerLink="/products"
+              routerLinkActive="active-link"
+              class="block py-2 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+              aria-current="page"
+              (click)="closeMenuAndScrollTop()"
+            >Products</a>
+          </li>
+          <li>
+            <a
+              routerLink="/categories"
+              routerLinkActive="active-link"
+              class="block py-2 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+              aria-current="page"
+              (click)="closeMenuAndScrollTop()"
+            >Categories</a>
+          </li>
+          <li>
+            <a
+              routerLink="/brands"
+              routerLinkActive="active-link"
+              class="block py-2 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+              aria-current="page"
+              (click)="closeMenuAndScrollTop()"
+            >Brands</a>
+          </li>
+        }
+      </ul>
+
+      <!-- User Actions -->
+      <ul class="capitalize font-medium flex items-center space-x-2">
+        @if(!isLogin) {
+          <li>
+            <a
+              routerLink="/register"
+              routerLinkActive="active-link"
+              class="block py-2 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+              aria-current="page"
+              (click)="closeMenuAndScrollTop()"
+            >Register</a>
+          </li>
+          <li>
+            <a
+              routerLink="/login"
+              routerLinkActive="active-link"
+              class="metallic-button px-6 py-2 rounded-md block text-center"
+              aria-current="page"
+              (click)="closeMenuAndScrollTop()"
+            >Login</a>
+          </li>
+        } @else {
+          <li>
+            <a
+              routerLink="/wishlist"
+              routerLinkActive="active-link"
+              class="flex items-center py-2 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300 relative"
+              aria-current="page"
+              (click)="closeMenuAndScrollTop()"
+            >
+              <span class="flex items-center">
+                Wishlist <i class="fas fa-heart ml-1.5"></i>
+                @if(wishlistCount > 0) {
+                  <div class="badge-container ml-1.5">
+                    <span class="count-badge">
+                      {{ wishlistCount < 10 ? wishlistCount : '9+' }}
+                    </span>
+                  </div>
+                }
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/cart"
+              routerLinkActive="active-link"
+              class="flex items-center py-2 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300 relative"
+              aria-current="page"
+              (click)="closeMenuAndScrollTop()"
+            >
+              <span class="flex items-center">
+                Cart <i class="fas fa-shopping-cart ml-1.5"></i>
+                @if(cartCount > 0) {
+                  <div class="badge-container ml-1.5">
+                    <span class="count-badge">
+                      {{ cartCount < 10 ? cartCount : '9+' }}
+                    </span>
+                  </div>
+                }
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              routerLink="/addresses"
+              routerLinkActive="active-link"
+              class="flex items-center py-2 px-4 text-[var(--primary-blue)] hover:bg-[var(--lavender)] rounded-md transition-colors duration-300"
+              aria-current="page"
+              (click)="closeMenuAndScrollTop()"
+            >
+              Addresses <i class="fas fa-map-marker-alt ml-1.5"></i>
+            </a>
+          </li>
+          <li>
+            <a
+              role="button"
+              class="flex items-center py-2 px-6 text-white bg-[var(--primary-blue)] hover:bg-[var(--secondary-blue)] rounded-md transition-all duration-300 cursor-pointer shadow-md"
+              (click)="authServiceForTemplate.logoutUser()"
+            >
+              Logout <i class="fas fa-sign-out-alt ml-1.5"></i>
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Spacer to prevent content from being hidden under fixed navbar -->
+<div class="h-[60px] sm:h-[70px] md:h-[80px]"></div>

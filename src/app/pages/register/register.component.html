@@ -1,0 +1,151 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <h1>Create Account</h1>
+      <p>Join FreshCart for exclusive offers and fast checkout</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="submitFrom()" class="register-form">
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name" class="form-label">Full Name</label>
+        <input
+          formControlName="name"
+          type="text"
+          id="name"
+          placeholder="Enter your full name"
+          class="form-control"
+          [class.is-invalid]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+        />
+        @if (registerForm.get('name')?.errors && registerForm.get('name')?.touched) {
+          <div class="invalid-feedback">
+            @if (registerForm.get('name')?.getError('required')) {
+              Name is required
+            } @else if (registerForm.get('name')?.hasError('minlength') || registerForm.get('name')?.hasError('maxlength')) {
+              Name must be between 3 and 20 characters
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <input
+          formControlName="email"
+          type="email"
+          id="email"
+          placeholder="Enter your email address"
+          class="form-control"
+          [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+        />
+        @if (registerForm.get('email')?.errors && registerForm.get('email')?.touched) {
+          <div class="invalid-feedback">
+            @if (registerForm.get('email')?.getError('required')) {
+              Email is required
+            } @else if (registerForm.get('email')?.getError('email')) {
+              Please enter a valid email address
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <input
+          formControlName="password"
+          type="password"
+          id="password"
+          placeholder="Create a strong password"
+          class="form-control"
+          [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+        />
+        @if (registerForm.get('password')?.errors && registerForm.get('password')?.touched) {
+          <div class="invalid-feedback">
+            @if (registerForm.get('password')?.getError('required')) {
+              Password is required
+            } @else if (registerForm.get('password')?.getError('pattern')) {
+              Password must start with uppercase letter and be at least 8 characters
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Confirm Password Field -->
+      <div class="form-group">
+        <label for="rePassword" class="form-label">Confirm Password</label>
+        <input
+          formControlName="rePassword"
+          type="password"
+          id="rePassword"
+          placeholder="Confirm your password"
+          class="form-control"
+          [class.is-invalid]="(registerForm.get('rePassword')?.touched && registerForm.getError('mismatch'))"
+        />
+        @if (registerForm.getError('mismatch') && registerForm.get('rePassword')?.touched) {
+          <div class="invalid-feedback">
+            Passwords do not match
+          </div>
+        }
+      </div>
+
+      <!-- Phone Field -->
+      <div class="form-group">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input
+          formControlName="phone"
+          type="tel"
+          id="phone"
+          placeholder="Enter your phone number"
+          class="form-control"
+          [class.is-invalid]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched"
+        />
+        @if (registerForm.get('phone')?.errors && registerForm.get('phone')?.touched) {
+          <div class="invalid-feedback">
+            @if (registerForm.get('phone')?.getError('required')) {
+              Phone number is required
+            } @else if (registerForm.get('phone')?.getError('pattern')) {
+              Please enter a valid Egyptian phone number
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Error Message -->
+      @if (msgError) {
+        <div class="alert-error">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>{{ msgError }}</span>
+        </div>
+      }
+
+      <!-- Success Message -->
+      @if (Success) {
+        <div class="alert-success">
+          <i class="fas fa-check-circle"></i>
+          <span>{{ Success }}</span>
+        </div>
+      }
+
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        class="btn-register"
+        [disabled]="registerForm.invalid || isLoading()"
+      >
+        @if (isLoading()) {
+          <span class="spinner"><i class="fas fa-spinner"></i></span>
+          Creating Account...
+        } @else {
+          Create Account
+        }
+      </button>
+
+      <!-- Login Link -->
+      <div class="login-link">
+        Already have an account? <a routerLink="/login">Sign in</a>
+      </div>
+    </form>
+  </div>
+</div>

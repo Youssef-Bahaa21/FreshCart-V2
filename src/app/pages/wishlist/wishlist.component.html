@@ -1,0 +1,100 @@
+<div class="container mx-auto px-3 sm:px-4 py-4 sm:py-6 md:py-8">
+  <h1 class="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-6 text-[var(--primary-blue)]">
+    <i class="fas fa-heart mr-2 text-[var(--accent-pink)]"></i> My Wishlist
+  </h1>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+  <div class="flex justify-center items-center h-40 sm:h-64">
+    <div class="spinner-border animate-spin inline-block w-8 h-8 sm:w-12 sm:h-12 border-4 rounded-full text-[var(--primary-blue)]" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  }
+
+  <!-- Empty Wishlist State -->
+  @else if (wishlistItems.length === 0) {
+  <div class="bg-white p-4 sm:p-6 md:p-8 rounded-lg shadow-md text-center">
+    <i class="fas fa-heart-broken text-4xl sm:text-5xl md:text-6xl text-[var(--accent-pink)] mb-3 sm:mb-4"></i>
+    <h2 class="text-xl sm:text-2xl font-bold mb-2">Your wishlist is empty</h2>
+    <p class="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">Discover products you love and add them to your wishlist!</p>
+    <a routerLink="/products" class="bg-[var(--primary-blue)] text-white text-sm sm:text-base py-2 px-4 sm:px-6 rounded-md hover:bg-[var(--secondary-blue)] transition-colors duration-300">
+      Explore Products
+    </a>
+  </div>
+  }
+
+  <!-- Wishlist Items -->
+  @else {
+  <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+    @for (item of wishlistItems; track item.id) {
+    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 relative product-card">
+      <!-- Remove from wishlist button -->
+      <button 
+        class="absolute top-2 right-2 bg-white rounded-full p-1.5 sm:p-2 shadow-md text-[var(--accent-pink)] hover:bg-[var(--accent-pink)] hover:text-white z-10 transition-colors duration-300"
+        [class.opacity-50]="loadingStates.get(item._id)"
+        [disabled]="loadingStates.get(item._id)"
+        (click)="removeFromWishlist(item._id)"
+      >
+        @if (loadingStates.get(item._id)) {
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        } @else {
+          <i class="fas fa-trash-alt text-xs sm:text-sm"></i>
+        }
+      </button>
+
+      <!-- Product Image -->
+      <a [routerLink]="['/details', item._id]">
+        <div class="h-32 sm:h-40 md:h-48 overflow-hidden flex items-center justify-center bg-gray-50">
+          <img 
+            [src]="item.imageCover" 
+            [alt]="item.title" 
+            class="object-contain h-full w-auto hover:scale-110 transition-transform duration-500"
+            loading="lazy"
+          >
+        </div>
+      </a>
+
+      <!-- Product Details -->
+      <div class="p-3 sm:p-4">
+        <!-- Brand & Category -->
+        <div class="flex justify-between text-[10px] sm:text-xs text-gray-500 mb-1 sm:mb-2">
+          <span class="bg-[var(--lavender)] px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full truncate max-w-[45%]">{{ item.category.name }}</span>
+          <span class="bg-[var(--pale-blue)] px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full truncate max-w-[45%]">{{ item.brand.name }}</span>
+        </div>
+        
+        <!-- Product Title -->
+        <a [routerLink]="['/details', item._id]">
+          <h3 class="font-medium text-sm sm:text-base text-gray-900 mb-1 sm:mb-2 truncate hover:text-[var(--primary-blue)]">{{ item.title }}</h3>
+        </a>
+        
+        <!-- Price -->
+        <div class="flex items-end justify-between mb-2 sm:mb-3">
+          <div class="text-sm sm:text-md font-bold text-[var(--primary-blue)]">{{ item.price | currency }}</div>
+          <div class="flex items-center">
+            <i class="fas fa-star text-yellow-400 mr-1 text-xs sm:text-sm"></i>
+            <span class="text-xs sm:text-sm">{{ item.ratingsAverage }}</span>
+          </div>
+        </div>
+        
+        <!-- Add to Cart Button -->
+        <button 
+          class="w-full bg-[var(--primary-blue)] text-white text-xs sm:text-sm py-1.5 sm:py-2 px-3 sm:px-4 rounded-md hover:bg-[var(--secondary-blue)] transition-colors duration-300 flex items-center justify-center"
+          [class.opacity-75]="addingToCartStates.get(item._id)"
+          [disabled]="addingToCartStates.get(item._id)"
+          (click)="addToCart(item._id)"
+        >
+          @if (addingToCartStates.get(item._id)) {
+            <span class="spinner-border spinner-border-sm mr-1 sm:mr-2" role="status" aria-hidden="true"></span>
+            Adding...
+          } @else {
+            <i class="fas fa-shopping-cart mr-1 sm:mr-2"></i>
+            Add to Cart
+          }
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>

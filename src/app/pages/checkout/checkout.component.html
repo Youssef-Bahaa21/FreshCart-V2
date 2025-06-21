@@ -1,0 +1,173 @@
+<div class="checkout-container">
+  <div class="checkout-header">
+    <h1 class="checkout-title">Complete Your Order</h1>
+    <p class="checkout-subtitle">Please fill in the shipping information to complete your purchase</p>
+  </div>
+
+  <!-- Authentication Error Message -->
+  @if (authError()) {
+    <div class="auth-error">
+      <div class="error-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h2>Authentication Required</h2>
+      <p>Your session has expired. You will be redirected to the login page.</p>
+      <p class="redirect-message">Please log in again to complete your purchase.</p>
+    </div>
+  }
+  <!-- Payment Success Message -->
+  @else if (paymentSuccess()) {
+    <div class="payment-success">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h2>Payment Successful!</h2>
+      <p>Thank you for your purchase. Your order has been placed successfully.</p>
+      <p class="redirect-message">You will be redirected to your orders page shortly...</p>
+    </div>
+  } @else {
+    <div class="checkout-card">
+      <!-- Saved Addresses Section -->
+      @if (userAddresses().length > 0) {
+        <div class="saved-addresses">
+          <h3 class="addresses-title">Your Saved Addresses</h3>
+          @if (isLoadingAddresses()) {
+            <div class="loading-spinner">
+              <div class="spinner"></div>
+              <span>Loading addresses...</span>
+            </div>
+          } @else {
+            <div class="addresses-grid">
+              @for (address of userAddresses(); track address._id) {
+                <div 
+                  class="address-card" 
+                  [class.selected]="selectedAddress() && selectedAddress()?._id === address._id"
+                  (click)="selectAddress(address)"
+                >
+                  <div class="address-header">
+                    <h4>{{ address.name || 'Address' }}</h4>
+                    @if (selectedAddress() && selectedAddress()?._id === address._id) {
+                      <div class="selected-badge">
+                        <i class="fas fa-check-circle"></i>
+                      </div>
+                    }
+                  </div>
+                  <div class="address-details">
+                    <p><i class="fas fa-map-marker-alt"></i> {{ address.details }}</p>
+                    <p><i class="fas fa-city"></i> {{ address.city }}</p>
+                    <p><i class="fas fa-phone"></i> {{ address.phone }}</p>
+                  </div>
+                </div>
+              }
+            </div>
+            <div class="address-separator">
+              <span>Or enter a new address</span>
+            </div>
+          }
+        </div>
+      }
+
+      <div class="checkout-form">
+        <!-- Payment Methods -->
+        <div class="payment-methods">
+          <div class="payment-method">
+            <img src="images/paypal.png" alt="PayPal" loading="lazy">
+          </div>
+          <div class="payment-method">
+            <img src="images/mastercard.webp" alt="Mastercard" loading="lazy">
+          </div>
+          <div class="payment-method">
+            <img src="images/American-Express-Color.png" alt="American Express" loading="lazy">
+          </div>
+          <div class="payment-method">
+            <img src="images/amazon-pay.png" alt="Amazon Pay" loading="lazy">
+          </div>
+        </div>
+
+        <form [formGroup]="checkOutFrom" (ngSubmit)="submitForm()">
+          <!-- Shipping Details -->
+          <div class="form-group">
+            <label for="details" class="form-label">Shipping Address</label>
+            <textarea
+              formControlName="details"
+              id="details"
+              class="form-control"
+              [class.is-invalid]="checkOutFrom.get('details')?.invalid && checkOutFrom.get('details')?.touched"
+              placeholder="Enter your complete shipping address"
+            ></textarea>
+            @if (checkOutFrom.get('details')?.invalid && checkOutFrom.get('details')?.touched) {
+              <div class="invalid-feedback">Shipping address is required</div>
+            }
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input
+              type="tel"
+              formControlName="phone"
+              id="phone"
+              class="form-control"
+              [class.is-invalid]="checkOutFrom.get('phone')?.invalid && checkOutFrom.get('phone')?.touched"
+              placeholder="Enter your phone number (e.g., 01xxxxxxxxx)"
+            />
+            @if (checkOutFrom.get('phone')?.invalid && checkOutFrom.get('phone')?.touched) {
+              <div class="invalid-feedback">
+                @if (checkOutFrom.get('phone')?.errors?.['required']) {
+                  Phone number is required
+                } @else if (checkOutFrom.get('phone')?.errors?.['pattern']) {
+                  Please enter a valid Egyptian phone number
+                }
+              </div>
+            }
+          </div>
+
+          <!-- City -->
+          <div class="form-group">
+            <label for="city" class="form-label">City</label>
+            <input
+              type="text"
+              formControlName="city"
+              id="city"
+              class="form-control"
+              [class.is-invalid]="checkOutFrom.get('city')?.invalid && checkOutFrom.get('city')?.touched"
+              placeholder="Enter your city"
+            />
+            @if (checkOutFrom.get('city')?.invalid && checkOutFrom.get('city')?.touched) {
+              <div class="invalid-feedback">City is required</div>
+            }
+          </div>
+
+          <!-- Option to save address -->
+          @if (!selectedAddress()) {
+            <div class="save-address-option">
+              <p>Would you like to save this address for future orders? 
+                <a routerLink="/addresses" class="save-link">Save in address book →</a>
+              </p>
+            </div>
+          }
+
+          <!-- Submit Button -->
+          <button 
+            type="submit" 
+            class="btn-checkout" 
+            [disabled]="checkOutFrom.invalid || isProcessing()"
+          >
+            @if (isProcessing()) {
+              <div class="spinner"></div>
+              <span>Processing...</span>
+            } @else {
+              <i class="fas fa-lock"></i>
+              <span>Complete Secure Payment</span>
+            }
+          </button>
+
+          <div class="secure-checkout">
+            <i class="fas fa-shield-alt"></i>
+            <span>Your payment information is secure</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

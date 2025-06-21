@@ -1,0 +1,131 @@
+<div class="categories-container container mx-auto px-4">
+  <!-- Categories Section Title -->
+  <h2 class="categories-title text-xl sm:text-2xl md:text-3xl">Browse Categories</h2>
+  
+  <!-- Categories Loading State -->
+  @if (isLoading()) {
+    <div class="loader-container py-8 sm:py-12">
+      <div class="loader"></div>
+    </div>
+  } @else {
+    <!-- Categories Grid -->
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6 categories-grid">
+      @for (category of categories; track category._id) {
+        <div 
+          class="category-card" 
+          [class.selected-category]="selectedCategory?._id === category._id"
+          (click)="selectCategory(category)"
+          [attr.data-category-id]="category._id"
+        >
+          <div class="category-image-container">
+            <img 
+              [src]="category.image" 
+              class="category-image"
+              alt="{{ category.name }}" 
+              loading="lazy"
+            />
+          </div>
+          <h3 class="category-name text-sm sm:text-base md:text-lg truncate px-2">{{ category.name }}</h3>
+        </div>
+      }
+    </div>
+    
+    <!-- Selected Category Products -->
+    @if (selectedCategory) {
+      <div class="products-container mt-6 sm:mt-8 md:mt-10">
+        <h3 class="text-xl sm:text-2xl font-bold text-center mb-3 sm:mb-5 text-primary-blue">
+          {{ selectedCategory.name }} Products
+        </h3>
+        
+        <!-- Products Loading State -->
+        @if (isProductsLoading()) {
+          <div class="loader-container py-8 sm:py-12">
+            <div class="loader"></div>
+          </div>
+        } @else if (categoryProducts.length === 0) {
+          <!-- Empty Products State -->
+          <div class="empty-state py-6 sm:py-8 px-4 sm:px-6">
+            <div class="empty-state-icon text-3xl sm:text-4xl md:text-5xl">🔍</div>
+            <h4 class="empty-state-title text-lg sm:text-xl md:text-2xl">No Products Found</h4>
+            <p class="empty-state-message text-sm sm:text-base">There are no products available in this category at the moment.</p>
+          </div>
+        } @else {
+          <!-- Products Grid -->
+          <div class="product-grid grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+            @for (product of categoryProducts; track product._id) {
+              <div class="product-card">
+                <div class="product-image-container cursor-pointer" (click)="goToProductDetails(product._id)">
+                  <img
+                    [src]="product.imageCover"
+                    [alt]="product.title"
+                    class="product-image"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-content p-3 sm:p-4">
+                  <span class="product-category text-[10px] sm:text-xs">{{ product.category.name }}</span>
+                  <h3 class="product-title text-sm sm:text-base cursor-pointer" (click)="goToProductDetails(product._id)">
+                    {{ product.title.length > 40 ? product.title.substring(0, 40) + '...' : product.title }}
+                  </h3>
+                  <div class="flex items-center justify-between mt-1 sm:mt-2">
+                    <span class="product-price text-sm sm:text-base md:text-lg">{{ product.price | currency:'EGP ':'symbol':'1.0-0' }}</span>
+                    <span class="text-xs sm:text-sm flex items-center gap-1">
+                      <i class="fas fa-star text-yellow-400"></i> {{ product.ratingsAverage }}
+                    </span>
+                  </div>
+                  <button 
+                    class="btn-add-cart cursor-pointer mt-2 sm:mt-3 py-2 text-xs sm:text-sm"
+                    [class.loading]="loadingStates.get(product._id)"
+                    [disabled]="loadingStates.get(product._id)"
+                    (click)="addToCart(product._id)"
+                  >
+                    @if (loadingStates.get(product._id)) {
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      <span>Adding...</span>
+                    } @else {
+                      <i class="fas fa-shopping-cart"></i>
+                      <span>Add to Cart</span>
+                    }
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+          
+          <!-- Pagination -->
+          @if (totalPages > 1) {
+            <div class="pagination-container mt-6 sm:mt-8 overflow-x-auto pb-2">
+              <button 
+                class="pagination-button text-xs sm:text-sm h-8 sm:h-10 min-w-[32px] sm:min-w-[40px]" 
+                [class.disabled]="currentPage === 1"
+                (click)="goToPage(currentPage - 1)"
+                [disabled]="currentPage === 1"
+              >
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              
+              @for (page of getPaginationArray(); track page) {
+                <button 
+                  class="pagination-button text-xs sm:text-sm h-8 sm:h-10 min-w-[32px] sm:min-w-[40px]" 
+                  [class.active]="page === currentPage"
+                  (click)="goToPage(page)"
+                >
+                  {{ page }}
+                </button>
+              }
+              
+              <button 
+                class="pagination-button text-xs sm:text-sm h-8 sm:h-10 min-w-[32px] sm:min-w-[40px]" 
+                [class.disabled]="currentPage === totalPages"
+                (click)="goToPage(currentPage + 1)"
+                [disabled]="currentPage === totalPages"
+              >
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          }
+        }
+      </div>
+    }
+  }
+</div>

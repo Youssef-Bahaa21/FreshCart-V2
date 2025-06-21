@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "public": true,
+    "builds": [
+        {
+            "src": "dist/ecomm-app/server/main.js",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "dist/ecomm-app/server/main.js"
+        }
+    ]
+}

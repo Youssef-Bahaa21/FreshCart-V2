@@ -1,0 +1,144 @@
+<div class="brands-container container mx-auto px-4">
+  <!-- Brands Section Title -->
+  <h2 class="brands-title text-xl sm:text-2xl md:text-3xl">Shop by Brands</h2>
+  
+  <!-- Brands Loading State -->
+  @if (isLoading()) {
+    <div class="loader-container py-8 sm:py-12">
+      <div class="loader"></div>
+    </div>
+  } @else {
+    <!-- Brands Grid -->
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-6 brands-grid">
+      @for (brand of brands; track brand._id) {
+        <div 
+          class="brand-card" 
+          [class.selected-brand]="selectedBrand?._id === brand._id"
+          (click)="selectBrand(brand)"
+        >
+          <div class="brand-image-container">
+            <img 
+              [src]="brand.image" 
+              class="brand-image"
+              alt="{{ brand.name }}" 
+              loading="lazy"
+            />
+          </div>
+          <h3 class="brand-name text-sm sm:text-base md:text-lg truncate px-2">{{ brand.name }}</h3>
+        </div>
+      }
+    </div>
+    
+    <!-- Selected Brand Products -->
+    @if (selectedBrand) {
+      <div class="products-container mt-6 sm:mt-8 md:mt-10">
+        <h3 class="text-xl sm:text-2xl font-bold text-center mb-3 sm:mb-5 text-primary-blue">
+          {{ selectedBrand.name }} Products
+        </h3>
+        
+        <!-- Products Loading State -->
+        @if (isProductsLoading()) {
+          <div class="loader-container py-8 sm:py-12">
+            <div class="loader"></div>
+          </div>
+        } @else if (brandProducts.length === 0) {
+          <!-- Empty Products State -->
+          <div class="empty-state py-6 sm:py-8 px-4 sm:px-6">
+            <div class="empty-state-icon text-3xl sm:text-4xl md:text-5xl">🔍</div>
+            <h4 class="empty-state-title text-lg sm:text-xl md:text-2xl">No Products Found</h4>
+            <p class="empty-state-message text-sm sm:text-base">There are no products available from this brand at the moment.</p>
+          </div>
+        } @else {
+          <!-- Products Grid -->
+          <div class="product-grid grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+            @for (product of getCurrentPageItems(); track product._id) {
+              <div class="product-card">
+                <div class="product-image-container cursor-pointer" (click)="goToProductDetails(product._id)">
+                  <img
+                    [src]="product.imageCover"
+                    [alt]="product.title"
+                    class="product-image"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="product-content p-3 sm:p-4">
+                  <span class="category text-[10px] sm:text-xs">{{ product.category.name }}</span>
+                  <h3 class="product-title text-sm sm:text-base cursor-pointer" (click)="goToProductDetails(product._id)">
+                    {{ product.title.length > 40 ? product.title.substring(0, 40) + '...' : product.title }}
+                  </h3>
+                  <div class="flex items-center justify-between mt-1 sm:mt-2">
+                    <span class="product-price text-sm sm:text-base md:text-lg">{{ product.price | currency:'EGP ':'symbol':'1.0-0' }}</span>
+                    <span class="text-xs sm:text-sm flex items-center gap-1">
+                      <i class="fas fa-star text-yellow-400"></i> {{ product.ratingsAverage }}
+                    </span>
+                  </div>
+                  <div class="flex justify-between items-center gap-2 mt-2 sm:mt-3">
+                    <button 
+                      class="btn-add-cart cursor-pointer py-2 text-xs sm:text-sm flex-grow"
+                      [class.loading]="loadingStates.get(product._id)"
+                      [disabled]="loadingStates.get(product._id)"
+                      (click)="addToCart(product._id)"
+                    >
+                      @if (loadingStates.get(product._id)) {
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span>Adding...</span>
+                      } @else {
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Add to Cart</span>
+                      }
+                    </button>
+                    <button 
+                      class="btn-wishlist cursor-pointer py-2 text-xs sm:text-sm px-2 sm:px-3"
+                      [class.active]="false"
+                      [disabled]="wishlistLoadingStates.get(product._id)"
+                      (click)="addToWishlist(product._id); $event.stopPropagation()"
+                    >
+                      @if (wishlistLoadingStates.get(product._id)) {
+                        <i class="fas fa-spinner fa-spin"></i>
+                      } @else {
+                        <i class="fas fa-heart"></i>
+                      }
+                    </button>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+          
+          <!-- Pagination -->
+          @if (totalPages > 1) {
+            <div class="pagination-container mt-6 sm:mt-8 overflow-x-auto pb-2">
+              <button 
+                class="pagination-button text-xs sm:text-sm h-8 sm:h-10 min-w-[32px] sm:min-w-[40px]" 
+                [class.disabled]="currentPage === 1"
+                (click)="changePage(currentPage - 1)"
+                [disabled]="currentPage === 1"
+              >
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              
+              @for (page of pageArray(); track page) {
+                <button 
+                  class="pagination-button text-xs sm:text-sm h-8 sm:h-10 min-w-[32px] sm:min-w-[40px]" 
+                  [class.active]="page === currentPage"
+                  (click)="changePage(page)"
+                >
+                  {{ page }}
+                </button>
+              }
+              
+              <button 
+                class="pagination-button text-xs sm:text-sm h-8 sm:h-10 min-w-[32px] sm:min-w-[40px]" 
+                [class.disabled]="currentPage === totalPages"
+                (click)="changePage(currentPage + 1)"
+                [disabled]="currentPage === totalPages"
+              >
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          }
+        }
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,9 @@
+<app-navbar [isLogin]="isLoggedIn"></app-navbar>
+
+<main class="min-h-screen pt-[var(--navbar-height-mobile)] md:pt-[var(--navbar-height-desktop)]">
+  <div [ngClass]="{'container mx-auto py-6 px-4': isLoggedIn}">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+
+<app-footer></app-footer>
