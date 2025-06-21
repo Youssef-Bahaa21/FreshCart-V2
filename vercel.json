@@ -1,16 +1,13 @@
 {
     "version": 2,
     "public": true,
-    "builds": [
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist/ecomm-app/browser",
+    "framework": "angular",
+    "rewrites": [
         {
-            "src": "dist/ecomm-app/server/main.js",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "dist/ecomm-app/server/main.js"
+            "source": "/(.*)",
+            "destination": "/index.html"
         }
     ]
 }
