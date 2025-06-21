@@ -1,8 +1,6 @@
-import { RenderMode, ServerRoute } from '@angular/ssr';
+// This file is temporarily disabled for production build
+// SSR is not used in the current deployment
 
-export const serverRoutes: ServerRoute[] = [
-  {
-    path: '**',
-    renderMode: RenderMode.Prerender
-  }
-];
+import { Routes } from '@angular/router';
+
+export const serverRoutes: Routes = [];

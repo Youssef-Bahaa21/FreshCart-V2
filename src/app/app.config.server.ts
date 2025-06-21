@@ -1,14 +1,8 @@
-import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
-import { provideServerRendering } from '@angular/platform-server';
-import { provideServerRouting } from '@angular/ssr';
-import { appConfig } from './app.config';
-import { serverRoutes } from './app.routes.server';
+// This file is temporarily disabled for production build
+// SSR is not used in the current deployment
 
-const serverConfig: ApplicationConfig = {
-  providers: [
-    provideServerRendering(),
-    provideServerRouting(serverRoutes)
-  ]
+import { ApplicationConfig } from '@angular/core';
+
+export const serverConfig: ApplicationConfig = {
+  providers: []
 };
-
-export const config = mergeApplicationConfig(appConfig, serverConfig);
