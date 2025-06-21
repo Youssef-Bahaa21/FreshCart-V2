@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-allorders',
-  imports: [],
   templateUrl: './allorders.component.html',
-  styleUrl: './allorders.component.css'
+  styleUrls: ['./allorders.component.css'],
+  standalone: true
 })
 export class AllordersComponent {
 

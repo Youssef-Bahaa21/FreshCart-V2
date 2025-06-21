@@ -15,15 +15,18 @@
       <p class="redirect-message">Please log in again to complete your purchase.</p>
     </div>
   }
-  <!-- Payment Success Message -->
-  @else if (paymentSuccess()) {
+  @if (isLoading()) {
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+    </div>
+  } @else if (paymentSuccess()) {
     <div class="payment-success">
-      <div class="success-icon">
-        <i class="fas fa-check-circle"></i>
-      </div>
+      <i class="fas fa-check-circle success-icon"></i>
       <h2>Payment Successful!</h2>
-      <p>Thank you for your purchase. Your order has been placed successfully.</p>
-      <p class="redirect-message">You will be redirected to your orders page shortly...</p>
+      <p>Your order has been placed successfully.</p>
+      <a routerLink="/allorders" class="view-orders-btn">
+        View Orders
+      </a>
     </div>
   } @else {
     <div class="checkout-card">

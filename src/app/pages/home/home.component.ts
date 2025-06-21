@@ -12,9 +12,10 @@ import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
-  imports: [CarouselModule, UpperCasePipe, CurrencyPipe, RouterLink],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css'],
+  standalone: true,
+  imports: [CarouselModule, UpperCasePipe, CurrencyPipe, RouterLink]
 })
 export class HomeComponent implements OnInit {
   private readonly categoryService = inject(CategoriesService)

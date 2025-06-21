@@ -26,6 +26,7 @@ export class CheckoutComponent implements OnInit {
   selectedAddress = signal<IAddress | null>(null);
   paymentSuccess = signal<boolean>(false);
   authError = signal<boolean>(false);
+  isLoading = signal(false);
 
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
