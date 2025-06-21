@@ -4,11 +4,17 @@
     "installCommand": "npm install --legacy-peer-deps",
     "buildCommand": "npm run build",
     "outputDirectory": "dist/ecomm-app/browser",
-    "framework": "angular",
-    "rewrites": [
+    "routes": [
         {
-            "source": "/(.*)",
-            "destination": "/index.html"
+            "handle": "filesystem"
+        },
+        {
+            "src": "/assets/(.*)",
+            "dest": "/assets/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/index.html"
         }
     ]
 }
